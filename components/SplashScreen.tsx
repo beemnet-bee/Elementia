@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useMemo } from 'react';
 
 const hexagonPath = "M50 5 L93.3 30 L93.3 80 L50 105 L6.7 80 L6.7 30 Z";
@@ -142,10 +143,10 @@ export const SplashScreen: React.FC = () => {
         <div className="relative w-64 h-64 mb-16 flex items-center justify-center">
           {/* Animated Cinematic Logo in the center */}
           <div className="absolute z-20 scale-75 transition-transform duration-500 hover:scale-90">
-            <svg viewBox="0 0 100 110" className="w-24 h-24 drop-shadow-[0_0_35px_rgba(6,182,212,0.6)]">
+            <svg viewBox="0 0 100 110" className="w-32 h-32 drop-shadow-[0_0_45px_rgba(34,211,238,0.7)]">
               <path d={hexagonPath} fill="none" stroke="rgba(34, 211, 238, 0.1)" strokeWidth="1" />
-              <path d={hexagonPath} className="animate-draw-path" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeDasharray="400" strokeDashoffset="400" />
-              <text x="50" y="62" className="text-center font-black fill-white text-[32px] tracking-tighter" textAnchor="middle" style={{ filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.8))' }}>El</text>
+              <path d={hexagonPath} className="animate-draw-path" fill="none" stroke="white" strokeWidth="4" strokeLinecap="round" strokeDasharray="400" strokeDashoffset="400" />
+              <text x="50" y="65" className="text-center font-black fill-white text-[38px] tracking-tighter" textAnchor="middle" style={{ filter: 'drop-shadow(0 0 15px rgba(255,255,255,0.9))' }}>El</text>
             </svg>
           </div>
 
