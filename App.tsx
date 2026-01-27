@@ -109,7 +109,7 @@ const AppContent: React.FC = () => {
   }
   
   return (
-    <div className={`min-h-screen ${isFitToScreen ? 'p-1 sm:p-2' : 'p-4 sm:p-6 lg:p-10'} pb-40 relative overflow-x-hidden flex flex-col items-center transition-all duration-700 bg-[#f9fafb] text-slate-900 dark:bg-slate-950 dark:text-slate-100`}>
+    <div className={`min-h-screen ${isFitToScreen ? 'p-1 sm:p-2' : 'p-4 sm:p-6 lg:p-8'} pb-40 relative overflow-x-hidden flex flex-col items-center transition-all duration-700 bg-[#f9fafb] text-slate-900 dark:bg-slate-950 dark:text-slate-100`}>
       <Sidebar 
         isOpen={isSidebarOpen} 
         onToggle={() => setIsSidebarOpen(!isSidebarOpen)} 
@@ -133,42 +133,42 @@ const AppContent: React.FC = () => {
       {/* View Specific UI */}
       {view === 'registry' ? (
         <>
-          <div className="fixed top-4 right-4 sm:top-8 sm:right-8 z-[60] flex flex-col items-end space-y-3 pointer-events-none">
+          <div className="fixed top-4 right-4 sm:top-6 sm:right-6 z-[60] flex flex-col items-end space-y-2 pointer-events-none">
             <button 
               onClick={() => setIsFitToScreen(!isFitToScreen)}
-              className={`group flex items-center space-x-3 px-4 py-2 sm:px-6 sm:py-3 bg-white/95 dark:bg-slate-900/95 backdrop-blur-3xl border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl transition-all active:scale-95 pointer-events-auto ${isFitToScreen ? 'border-cyan-500/50 text-cyan-500' : 'text-slate-500 dark:text-slate-400'}`}
+              className={`group flex items-center space-x-2 px-4 py-2 bg-white/95 dark:bg-slate-900/95 backdrop-blur-3xl border border-slate-200 dark:border-slate-800 rounded-xl shadow-lg transition-all active:scale-95 pointer-events-auto ${isFitToScreen ? 'border-cyan-500/50 text-cyan-500' : 'text-slate-500 dark:text-slate-400'}`}
             >
-              <span className="text-[9px] font-black uppercase tracking-[0.3em] transition-colors group-hover:text-cyan-500">
+              <span className="text-[8px] font-black uppercase tracking-[0.3em] transition-colors group-hover:text-cyan-500">
                 {isFitToScreen ? 'GRID VIEW' : 'FIT WIDTH'}
               </span>
-              <svg className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-500 ${isFitToScreen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className={`w-3.5 h-3.5 transition-transform duration-500 ${isFitToScreen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isFitToScreen ? "M4 4l5 5m0-5v5h5M20 20l-5-5m5 5v-5h-5M4 20l5-5m-5 5v-5h5M20 4l-5 5m5-5V9h-5" : "M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"} />
               </svg>
             </button>
             <Legend />
           </div>
 
-          <header className={`w-full max-w-7xl text-center ${isFitToScreen ? 'mb-1 sm:mb-2' : 'mb-12'} animate-reveal relative z-10 transition-all duration-700`}>
-            <div className={`inline-flex items-center space-x-4 ${isFitToScreen ? 'mb-1 scale-[0.85]' : 'mb-5'} px-5 py-2 rounded-full border border-slate-200 dark:border-cyan-500/20 bg-white/60 dark:bg-cyan-500/5 backdrop-blur-md text-slate-500 dark:text-cyan-400 text-[9px] font-black tracking-[0.3em] uppercase shadow-sm dark:shadow-none transition-all`}>
-              {animationsEnabled && <span className="w-2 h-2 rounded-full bg-cyan-500 animate-ping"></span>}
+          <header className={`w-full max-w-7xl text-center ${isFitToScreen ? 'mb-2' : 'mb-8'} animate-reveal relative z-10 transition-all duration-700`}>
+            <div className={`inline-flex items-center space-x-3 ${isFitToScreen ? 'mb-1 scale-[0.75]' : 'mb-3'} px-4 py-1.5 rounded-full border border-slate-200 dark:border-cyan-500/20 bg-white/60 dark:bg-cyan-500/5 backdrop-blur-md text-slate-500 dark:text-cyan-400 text-[8px] font-black tracking-[0.3em] uppercase shadow-sm dark:shadow-none transition-all`}>
+              {animationsEnabled && <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-ping"></span>}
               <span>QUANTUM REGISTRY v2.8.4</span>
             </div>
-            <h1 className={`${isFitToScreen ? 'text-2xl sm:text-4xl lg:text-6xl' : 'text-6xl sm:text-7xl lg:text-9xl'} font-black bg-clip-text text-transparent bg-gradient-to-b from-slate-900 via-slate-800 to-slate-500 dark:from-white dark:via-white dark:to-slate-500 tracking-tighter font-ubuntu drop-shadow-[0_5px_10px_rgba(0,0,0,0.05)] transition-all duration-700`}>
+            <h1 className={`${isFitToScreen ? 'text-2xl sm:text-3xl lg:text-5xl' : 'text-5xl sm:text-6xl lg:text-8xl'} font-black bg-clip-text text-transparent bg-gradient-to-b from-slate-900 via-slate-800 to-slate-500 dark:from-white dark:via-white dark:to-slate-500 tracking-tighter font-ubuntu transition-all duration-700`}>
               ELEMENTIA
             </h1>
             {!isFitToScreen && (
-              <p className="text-slate-500 dark:text-slate-400 mt-5 text-xl sm:text-2xl font-light tracking-wide max-w-3xl mx-auto opacity-80 leading-relaxed italic animate-fade-in">
+              <p className="text-slate-500 dark:text-slate-400 mt-3 text-lg sm:text-xl font-light tracking-wide max-w-2xl mx-auto opacity-80 italic animate-fade-in">
                 High-fidelity periodic atlas for the modern laboratory.
               </p>
             )}
           </header>
           
-          <div className={`w-full max-w-screen-2xl animate-reveal relative z-10 transition-all duration-700 ${isFitToScreen ? 'mb-1' : ''}`} style={{ animationDelay: '0.2s' }}>
+          <div className={`w-full max-w-screen-2xl animate-reveal relative z-10 transition-all duration-700 ${isFitToScreen ? 'mb-1' : 'mb-4'}`} style={{ animationDelay: '0.2s' }}>
             <CategoryFilters activeCategory={activeCategory} onCategoryChange={handleCategoryChange} />
           </div>
 
-          <div className={`w-full relative z-10 mt-2 sm:mt-8 mb-20 px-1 sm:px-6 transition-all duration-700 ${isFitToScreen ? 'overflow-x-hidden overflow-y-auto' : 'overflow-x-auto custom-scrollbar'}`}>
-            <main className={`mx-auto animate-reveal ${isFitToScreen ? 'w-full max-w-[99vw]' : 'w-fit'}`} style={{ animationDelay: '0.4s' }}>
+          <div className={`w-full relative z-10 mt-2 sm:mt-4 mb-20 px-1 sm:px-4 transition-all duration-700 ${isFitToScreen ? 'overflow-x-hidden overflow-y-auto' : 'overflow-x-auto custom-scrollbar'}`}>
+            <main className={`mx-auto animate-reveal ${isFitToScreen ? 'w-full max-w-[98vw]' : 'w-fit'}`} style={{ animationDelay: '0.4s' }}>
               <PeriodicTable 
                 elements={ELEMENTS} 
                 onElementClick={handleElementClick}
@@ -191,8 +191,8 @@ const AppContent: React.FC = () => {
       {animationsEnabled && <InteractiveBackground />}
       
       <div className={`fixed inset-0 pointer-events-none z-0 transition-opacity duration-1000 ${animationsEnabled ? 'opacity-100' : 'opacity-20'}`}>
-        <div className="absolute top-[-15%] left-[-10%] w-[50%] h-[50%] bg-blue-500/5 dark:bg-blue-900/10 rounded-full blur-[140px] animate-pulse"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-cyan-400/5 dark:bg-cyan-900/10 rounded-full blur-[140px] animate-pulse" style={{ animationDelay: '2.5s' }}></div>
+        <div className="absolute top-[-15%] left-[-10%] w-[40%] h-[40%] bg-blue-500/5 dark:bg-blue-900/10 rounded-full blur-[100px] animate-pulse"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-cyan-400/5 dark:bg-cyan-900/10 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '2.5s' }}></div>
       </div>
 
       {selectedElement && (
@@ -231,12 +231,12 @@ const AppContent: React.FC = () => {
       
        <style>{`
         @keyframes reveal {
-          from { opacity: 0; transform: translateY(40px); filter: blur(15px); }
+          from { opacity: 0; transform: translateY(20px); filter: blur(10px); }
           to { opacity: 1; transform: translateY(0); filter: blur(0); }
         }
         .animate-reveal { animation: reveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         
-        .custom-scrollbar::-webkit-scrollbar { height: 10px; }
+        .custom-scrollbar::-webkit-scrollbar { height: 8px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.03); border-radius: 10px; }
         .dark .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.1); border-radius: 10px; border: 2px solid transparent; }

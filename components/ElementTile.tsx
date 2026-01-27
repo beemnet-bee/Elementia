@@ -51,7 +51,7 @@ export const ElementTile: React.FC<ElementTileProps> = ({ element, onClick, isDi
 
   const dimensionClasses = isResponsive 
     ? "w-full h-full" 
-    : "w-[5.8rem] h-[6.5rem]";
+    : "w-[4.8rem] h-[5.4rem]";
 
   const tileClasses = `
     relative ${dimensionClasses} flex flex-col items-center justify-center 
@@ -59,13 +59,13 @@ export const ElementTile: React.FC<ElementTileProps> = ({ element, onClick, isDi
     focus:z-20 focus:outline-none group ${colorClass} border backdrop-blur-md
     ${isDimmed 
       ? 'opacity-10 grayscale scale-90 pointer-events-none' 
-      : `opacity-100 hover:scale-[1.15] hover:z-20 focus:scale-[1.15] hover:shadow-[0_0_25px_rgba(0,0,0,0.2)] dark:hover:shadow-[0_0_25px_rgba(34,211,238,0.3)] ${glowClass} cursor-pointer`
+      : `opacity-100 hover:scale-[1.12] hover:z-20 focus:scale-[1.12] hover:shadow-[0_0_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_0_20px_rgba(34,211,238,0.25)] ${glowClass} cursor-pointer`
     }
   `;
 
-  const numberFontSize = isResponsive ? 'text-[clamp(6px,0.7vw,12px)]' : 'text-[10px]';
-  const symbolFontSize = isResponsive ? 'text-[clamp(10px,2vw,32px)]' : 'text-3xl';
-  const nameFontSize = isResponsive ? 'text-[clamp(5px,0.5vw,10px)]' : 'text-[9px]';
+  const numberFontSize = isResponsive ? 'text-[clamp(5px,0.6vw,10px)]' : 'text-[9px]';
+  const symbolFontSize = isResponsive ? 'text-[clamp(10px,1.8vw,28px)]' : 'text-2xl';
+  const nameFontSize = isResponsive ? 'text-[clamp(4px,0.4vw,8px)]' : 'text-[8px]';
 
   return (
     <button
@@ -76,38 +76,33 @@ export const ElementTile: React.FC<ElementTileProps> = ({ element, onClick, isDi
       onMouseEnter={() => onHover(element)}
       onMouseLeave={() => onHover(null)}
     >
-      <div className={`absolute top-0.5 sm:top-1 left-0 right-0 ${numberFontSize} font-black opacity-80 text-center tracking-tighter transition-all`}>
+      <div className={`absolute top-0.5 left-0 right-0 ${numberFontSize} font-black opacity-80 text-center tracking-tighter transition-all`}>
         {element.number}
       </div>
       
-      <div className={`${symbolFontSize} font-black z-10 tracking-tighter drop-shadow-[0_2px_3px_rgba(0,0,0,0.2)] transition-all transform group-hover:scale-105`}>
+      <div className={`${symbolFontSize} font-black z-10 tracking-tighter drop-shadow-[0_1px_2px_rgba(0,0,0,0.2)] transition-all transform group-hover:scale-105`}>
         {element.symbol}
       </div>
       
-      <div className={`${nameFontSize} font-bold uppercase tracking-[0.1em] sm:tracking-widest truncate w-full px-0.5 sm:px-2 text-center z-10 opacity-70 mt-0 sm:mt-0.5 transition-all overflow-hidden whitespace-nowrap`}>
+      <div className={`${nameFontSize} font-bold uppercase tracking-widest truncate w-full px-1 text-center z-10 opacity-70 mt-0 transition-all overflow-hidden whitespace-nowrap`}>
         {heatmapProperty && !isNaN(parseFloat(String(element[heatmapProperty]))) 
           ? element[heatmapProperty] 
           : element.name}
       </div>
 
-      {/* Mastery Indicator */}
       {mastered && !isDimmed && (
-        <div className="absolute top-2 right-2 w-1 h-1 rounded-full bg-cyan-400 shadow-[0_0_5px_rgba(34,211,238,0.8)]"></div>
+        <div className="absolute top-1.5 right-1.5 w-1 h-1 rounded-full bg-cyan-400 shadow-[0_0_4px_rgba(34,211,238,0.8)]"></div>
       )}
       
       <div 
-        className="absolute inset-0 opacity-0 group-hover:opacity-30 bg-gradient-to-br from-white/40 via-transparent to-black/10 transition-opacity duration-300 pointer-events-none"
+        className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-gradient-to-br from-white/40 via-transparent to-black/10 transition-opacity duration-300 pointer-events-none"
         style={hexagonStyle}
       ></div>
 
       <div 
-        className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/10 to-transparent opacity-50 pointer-events-none"
+        className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/10 to-transparent opacity-40 pointer-events-none"
         style={hexagonStyle}
       ></div>
-      
-      {heatmapProperty && !isDimmed && (
-        <div className="absolute bottom-1 w-0.5 h-0.5 rounded-full bg-white animate-pulse opacity-60"></div>
-      )}
     </button>
   );
 };
