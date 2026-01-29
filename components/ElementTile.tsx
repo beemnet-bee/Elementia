@@ -1,7 +1,7 @@
 
 import React from 'react';
 import type { ElementData } from '../types';
-import { CATEGORY_COLORS, CATEGORY_GLOW_COLORS } from '../constants';
+import { CATEGORY_COLORS, CATEGORY_GLOW_COLORS, CATEGORY_ACCENT_COLORS } from '../constants';
 import { useMastery } from '../contexts/MasteryContext';
 
 interface ElementTileProps {
@@ -13,96 +13,89 @@ interface ElementTileProps {
   isResponsive?: boolean;
 }
 
-const hexagonStyle = {
-  clipPath: 'polygon(50% 1%, 98% 25%, 98% 75%, 50% 99%, 2% 75%, 2% 25%)',
-};
+// Inset polygon to ensure vertices never touch neighbors even with small gaps
+const hexagonPath = 'polygon(50% 2%, 100% 25%, 100% 75%, 50% 98%, 0% 75%, 0% 25%)';
 
-export const ElementTile: React.FC<ElementTileProps> = ({ element, onClick, isDimmed, onHover, heatmapProperty, isResponsive }) => {
+export const ElementTile: React.FC<ElementTileProps> = ({ 
+  element, 
+  onClick, 
+  isDimmed, 
+  onHover, 
+  heatmapProperty, 
+  isResponsive 
+}) => {
   const { isMastered } = useMastery();
   const mastered = isMastered(element.number);
   
-  let colorClass = CATEGORY_COLORS[element.category] || 'bg-slate-200/40 text-slate-600 border-slate-300 dark:bg-slate-800/40 dark:text-slate-300 dark:border-slate-500/50';
-  let glowClass = CATEGORY_GLOW_COLORS[element.category] || 'shadow-slate-200 dark:shadow-slate-500/20';
-  let customStyle: React.CSSProperties = {};
-
-  if (heatmapProperty) {
-    const val = element[heatmapProperty];
-    const numVal = parseFloat(String(val));
-    
-    if (!isNaN(numVal)) {
-      let ratio = 0;
-      let rgb = [20, 50, 100]; 
-
-      if (heatmapProperty === 'electronegativity') {
-        ratio = (numVal - 0.7) / (4.0 - 0.7);
-        rgb = [20, 50 + Math.floor(ratio * 150), 100 + Math.floor(ratio * 155)];
-      } else if (heatmapProperty === 'ionization_energy') {
-        ratio = (numVal - 300) / (2400 - 300);
-        rgb = [80 + Math.floor(ratio * 170), 20 + Math.floor(ratio * 50), 150 + Math.floor(ratio * 105)];
-      } else if (heatmapProperty === 'electron_affinity') {
-        ratio = Math.max(0, numVal) / 350;
-        rgb = [200 + Math.floor(ratio * 55), 100 + Math.floor(ratio * 100), 20];
-      }
-
-      colorClass = `text-white border-transparent`;
-      customStyle = { backgroundColor: isDimmed ? undefined : `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})` };
-    }
-  }
-
-  const dimensionClasses = isResponsive 
-    ? "w-full h-full" 
-    : "w-[4.8rem] h-[5.4rem]";
-
-  const tileClasses = `
-    relative ${dimensionClasses} flex flex-col items-center justify-center 
-    font-ubuntu transition-all duration-300 ease-out transform 
-    focus:z-20 focus:outline-none group ${colorClass} border backdrop-blur-md
-    ${isDimmed 
-      ? 'opacity-10 grayscale scale-90 pointer-events-none' 
-      : `opacity-100 hover:scale-[1.12] hover:z-20 focus:scale-[1.12] hover:shadow-[0_0_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_0_20px_rgba(34,211,238,0.25)] ${glowClass} cursor-pointer`
-    }
-  `;
-
-  const numberFontSize = isResponsive ? 'text-[clamp(5px,0.6vw,10px)]' : 'text-[9px]';
-  const symbolFontSize = isResponsive ? 'text-[clamp(10px,1.8vw,28px)]' : 'text-2xl';
-  const nameFontSize = isResponsive ? 'text-[clamp(4px,0.4vw,8px)]' : 'text-[8px]';
+  const colorClass = CATEGORY_COLORS[element.category] || 'bg-slate-200/40 text-slate-600 border-slate-300 dark:bg-slate-800/40 dark:text-slate-300 dark:border-slate-500/50';
+  const accent = CATEGORY_ACCENT_COLORS[element.category];
+  
+  // Dynamic glow based on category for the hover state
+  const hoverGlow = accent ? `hover:shadow-[0_0_25px_-5px_rgba(0,0,0,0.1)] hover:dark:shadow-[0_0_30px_-5px_#${accent.bg.split('-')[3]}]` : '';
 
   return (
     <button
       onClick={() => onClick(element)}
-      className={tileClasses}
-      style={{ ...hexagonStyle, ...customStyle }}
-      disabled={isDimmed}
       onMouseEnter={() => onHover(element)}
       onMouseLeave={() => onHover(null)}
+      style={{
+        clipPath: hexagonPath,
+        aspectRatio: '1 / 1.15'
+      }}
+      className={`group relative w-full transition-all duration-500 flex flex-col items-center justify-center
+        ${isDimmed 
+          ? 'opacity-10 scale-90 blur-[2px] grayscale pointer-events-none' 
+          : 'opacity-100 scale-100 hover:scale-[1.3] hover:z-[60] cursor-pointer'
+        }
+      `}
     >
-      <div className={`absolute top-0.5 left-0 right-0 ${numberFontSize} font-black opacity-80 text-center tracking-tighter transition-all`}>
-        {element.number}
-      </div>
-      
-      <div className={`${symbolFontSize} font-black z-10 tracking-tighter drop-shadow-[0_1px_2px_rgba(0,0,0,0.2)] transition-all transform group-hover:scale-105`}>
-        {element.symbol}
-      </div>
-      
-      <div className={`${nameFontSize} font-bold uppercase tracking-widest truncate w-full px-1 text-center z-10 opacity-70 mt-0 transition-all overflow-hidden whitespace-nowrap`}>
-        {heatmapProperty && !isNaN(parseFloat(String(element[heatmapProperty]))) 
-          ? element[heatmapProperty] 
-          : element.name}
+      {/* Outer Border Layer (Energy Frame) */}
+      <div className={`absolute inset-0 border-[1.5px] ${colorClass.split(' ')[2]} opacity-40 group-hover:opacity-100 transition-opacity duration-500`} style={{ clipPath: hexagonPath }}></div>
+
+      {/* Main Background Layer (Glass Core) */}
+      <div className={`absolute inset-[1.5px] ${colorClass.split(' ')[0]} backdrop-blur-sm transition-all duration-500 group-hover:brightness-125`} style={{ clipPath: hexagonPath }}>
+        {/* Top-down subtle lighting */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent dark:from-white/5 pointer-events-none"></div>
       </div>
 
-      {mastered && !isDimmed && (
-        <div className="absolute top-1.5 right-1.5 w-1 h-1 rounded-full bg-cyan-400 shadow-[0_0_4px_rgba(34,211,238,0.8)]"></div>
+      {/* Content Container */}
+      <div className="relative z-10 flex flex-col items-center justify-center w-full h-full pb-1">
+        {/* Atomic Number */}
+        <span className={`absolute top-[18%] left-1/2 -translate-x-1/2 font-black transition-all duration-300
+          ${isResponsive ? 'text-[clamp(6px,1vw,10px)]' : 'text-[9px]'} 
+          text-slate-500 dark:text-slate-400 opacity-60 group-hover:opacity-100 group-hover:text-cyan-500 group-hover:scale-110
+        `}>
+          {element.number}
+        </span>
+        
+        {/* Symbol */}
+        <span className={`font-black font-ubuntu tracking-tighter transition-all duration-500 transform 
+          ${isResponsive ? 'text-[clamp(12px,2.2vw,22px)]' : 'text-2xl'}
+          text-slate-900 dark:text-white group-hover:scale-125 group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]
+        `}>
+          {element.symbol}
+        </span>
+
+        {/* Atomic Mass - Primary info when not responsive */}
+        {!isResponsive && (
+          <span className="absolute bottom-[18%] left-1/2 -translate-x-1/2 text-[7px] font-bold opacity-40 group-hover:opacity-100 text-slate-500 dark:text-slate-400 uppercase tracking-tighter transition-opacity">
+            {element.atomic_mass}
+          </span>
+        )}
+      </div>
+
+      {/* Interactive Spotlight Effect (Visible on Hover) */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none bg-[radial-gradient(circle_at_50%_40%,rgba(255,255,255,0.15),transparent_70%)]"></div>
+
+      {/* Mastery Indicator */}
+      {mastered && (
+        <div className="absolute top-[32%] right-[22%] w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981] group-hover:scale-150 transition-transform"></div>
       )}
-      
-      <div 
-        className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-gradient-to-br from-white/40 via-transparent to-black/10 transition-opacity duration-300 pointer-events-none"
-        style={hexagonStyle}
-      ></div>
 
-      <div 
-        className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/10 to-transparent opacity-40 pointer-events-none"
-        style={hexagonStyle}
-      ></div>
+      {/* Heatmap Overlay */}
+      {heatmapProperty && (
+        <div className="absolute inset-0 bg-cyan-500/20 mix-blend-overlay pointer-events-none group-hover:bg-transparent transition-colors"></div>
+      )}
     </button>
   );
 };

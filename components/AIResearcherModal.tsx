@@ -15,19 +15,22 @@ export const AIResearcherModal: React.FC<AIResearcherModalProps> = ({ onClose })
     setIsLoading(true);
     setResponse('');
     try {
+      // Create a fresh instance for current context
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const result = await ai.models.generateContent({
         model: 'gemini-3-pro-preview',
         contents: `You are an expert theoretical chemist. Research query: ${query}. Provide a sophisticated, technical, yet accessible analysis in under 300 words. Focus on quantum mechanics or industrial applications.`,
         config: {
             temperature: 0.8,
+            // CRITICAL: maxOutputTokens MUST be set when using thinkingBudget
+            maxOutputTokens: 4000,
             thinkingConfig: { thinkingBudget: 2000 }
         }
       });
       setResponse(result.text || "No insights generated.");
-    } catch (err) {
-      console.error(err);
-      setResponse("Connection to Quantum Intelligence failed. Check API configuration.");
+    } catch (err: any) {
+      console.error("AI Research Error:", err);
+      setResponse(`System Error: ${err.message || 'Connection to Quantum Intelligence failed.'} Please try a different query or check your environment configuration.`);
     } finally {
       setIsLoading(false);
     }
