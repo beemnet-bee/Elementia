@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import type { ElementData } from '../types';
 import { ElementTile } from './ElementTile';
 
@@ -28,6 +28,13 @@ export const PeriodicTable: React.FC<PeriodicTableProps> = ({
   heatmapTooltipElement,
   onCloseTooltip
 }) => {
+  const [isRevealed, setIsRevealed] = useState(false);
+
+  useEffect(() => {
+    // Small delay to ensure the mount is clean before cascading
+    const timer = setTimeout(() => setIsRevealed(true), 150);
+    return () => clearTimeout(timer);
+  }, []);
 
   const gridStyles = isFitToScreen 
     ? {
@@ -37,7 +44,7 @@ export const PeriodicTable: React.FC<PeriodicTableProps> = ({
       }
     : { 
         gridTemplateColumns: 'repeat(18, 5.4rem)',
-        gridAutoRows: '5.9rem', // Tightened from 6.2rem
+        gridAutoRows: '5.9rem',
         width: 'max-content'
       };
 
@@ -67,6 +74,9 @@ export const PeriodicTable: React.FC<PeriodicTableProps> = ({
             const isHydrogen = element.number === 1;
             const isHelium = element.number === 2;
 
+            // Staggered entry delay based on row and column position
+            const entryDelay = (element.row * 60) + (element.col * 20);
+
             let tooltipContainerClasses = "absolute bottom-full left-1/2 -translate-x-1/2 mb-6 z-[100] pointer-events-none animate-tooltip-in";
             let arrowClasses = "absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-slate-900/95 dark:border-t-white/95";
 
@@ -81,8 +91,15 @@ export const PeriodicTable: React.FC<PeriodicTableProps> = ({
             return (
               <div
                 key={element.number}
-                className={`relative transition-all duration-300 w-full ${isFitToScreen ? '' : 'h-full'}`}
-                style={{ gridColumn: element.col, gridRow: element.row }}
+                className={`relative transition-all duration-700 w-full ${isFitToScreen ? '' : 'h-full'}`}
+                style={{ 
+                  gridColumn: element.col, 
+                  gridRow: element.row,
+                  opacity: isRevealed ? (isDimmed ? 0.2 : 1) : 0,
+                  transform: isRevealed ? (isHovered ? 'scale(1.15)' : 'scale(1)') : 'scale(0.5) translateY(20px)',
+                  transitionDelay: isRevealed && !isDimmed ? '0ms' : `${entryDelay}ms`,
+                  zIndex: isHovered ? 50 : 1
+                }}
               >
                 <ElementTile 
                   element={element} 
@@ -118,14 +135,14 @@ export const PeriodicTable: React.FC<PeriodicTableProps> = ({
           
           {/* Legend Connectors for f-block */}
           <div 
-            className={`flex items-center justify-end text-right ${isFitToScreen ? 'text-[clamp(6px,1.2vw,10px)] pr-1' : 'text-[9px] pr-4'} font-black tracking-[0.3em] uppercase text-slate-400 dark:text-slate-600 pointer-events-none transition-all duration-700`}
-            style={{ gridRow: 9, gridColumn: '1 / span 3' }}
+            className={`flex items-center justify-end text-right ${isFitToScreen ? 'text-[clamp(6px,1.2vw,10px)] pr-1' : 'text-[9px] pr-4'} font-black tracking-[0.3em] uppercase text-slate-400 dark:text-slate-600 pointer-events-none transition-all duration-700 ${isRevealed ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}
+            style={{ gridRow: 9, gridColumn: '1 / span 3', transitionDelay: '800ms' }}
           >
             {isFitToScreen ? 'LN' : 'Lanthanoids'} <span className="ml-2 opacity-40">→</span>
           </div>
           <div 
-            className={`flex items-center justify-end text-right ${isFitToScreen ? 'text-[clamp(6px,1.2vw,10px)] pr-1' : 'text-[9px] pr-4'} font-black tracking-[0.3em] uppercase text-slate-400 dark:text-slate-600 pointer-events-none transition-all duration-700`}
-            style={{ gridRow: 10, gridColumn: '1 / span 3' }}
+            className={`flex items-center justify-end text-right ${isFitToScreen ? 'text-[clamp(6px,1.2vw,10px)] pr-1' : 'text-[9px] pr-4'} font-black tracking-[0.3em] uppercase text-slate-400 dark:text-slate-600 pointer-events-none transition-all duration-700 ${isRevealed ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}
+            style={{ gridRow: 10, gridColumn: '1 / span 3', transitionDelay: '900ms' }}
           >
             {isFitToScreen ? 'AC' : 'Actinoids'} <span className="ml-2 opacity-40">→</span>
           </div>
