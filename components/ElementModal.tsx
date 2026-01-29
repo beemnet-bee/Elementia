@@ -1,8 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
 import type { ElementData } from '../types';
-import { CATEGORY_BORDER_COLORS } from '../constants';
+import { CATEGORY_BORDER_COLORS, CATEGORY_ACCENT_COLORS } from '../constants';
 import { AtomAnimation } from './AtomAnimation';
+import { QuantumModel3D } from './QuantumModel3D';
 import { BondingVisualization } from './BondingVisualization';
 import { getElementFact } from '../services/geminiService';
 import { useMastery } from '../contexts/MasteryContext';
@@ -16,8 +17,11 @@ interface ElementModalProps {
 export const ElementModal: React.FC<ElementModalProps> = ({ element, onClose, animationsEnabled = true }) => {
   const { isMastered, toggleMastery } = useMastery();
   const borderClass = CATEGORY_BORDER_COLORS[element.category] || 'border-slate-500';
+  const accent = CATEGORY_ACCENT_COLORS[element.category];
+  
   const [fact, setFact] = useState<string>('Querying neural network for atomic insights...');
   const [isLoadingFact, setIsLoadingFact] = useState(true);
+  const [visMode, setVisMode] = useState<'2d' | '3d'>('3d');
 
   const mastered = isMastered(element.number);
 
@@ -76,9 +80,36 @@ export const ElementModal: React.FC<ElementModalProps> = ({ element, onClose, an
         
         <div className="flex-grow p-6 space-y-6 overflow-y-auto grid grid-cols-1 lg:grid-cols-12 gap-8 scrollbar-hide">
           <div className="lg:col-span-5 flex flex-col space-y-6">
-            <div className="bg-slate-50 dark:bg-slate-950/50 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center min-h-[220px] relative group overflow-hidden">
-              <div className="absolute top-2 left-3 text-[9px] uppercase tracking-widest text-slate-400 dark:text-slate-600 font-bold">Orbital Probability</div>
-              <AtomAnimation electron_configuration={element.electron_configuration} animationsEnabled={animationsEnabled} />
+            <div className="bg-slate-50 dark:bg-slate-950/50 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center min-h-[300px] relative group overflow-hidden">
+              <div className="absolute top-2 left-3 z-10 flex items-center space-x-2">
+                <span className="text-[9px] uppercase tracking-widest text-slate-400 dark:text-slate-600 font-bold">Quantum Projection</span>
+                <div className="flex bg-slate-200 dark:bg-slate-800 rounded-lg p-0.5 ml-2">
+                   <button 
+                    onClick={() => setVisMode('2d')}
+                    className={`px-2 py-0.5 text-[8px] font-black uppercase tracking-tighter rounded-md transition-all ${visMode === '2d' ? 'bg-white dark:bg-slate-700 text-cyan-600 shadow-sm' : 'text-slate-500'}`}
+                   >2D</button>
+                   <button 
+                    onClick={() => setVisMode('3d')}
+                    className={`px-2 py-0.5 text-[8px] font-black uppercase tracking-tighter rounded-md transition-all ${visMode === '3d' ? 'bg-white dark:bg-slate-700 text-cyan-600 shadow-sm' : 'text-slate-50'}`}
+                   >3D</button>
+                </div>
+              </div>
+
+              <div className="w-full h-full min-h-[250px] relative">
+                 {visMode === '2d' ? (
+                   <AtomAnimation electron_configuration={element.electron_configuration} animationsEnabled={animationsEnabled} />
+                 ) : (
+                   <QuantumModel3D 
+                      electrons={element.electrons} 
+                      config={element.electron_configuration} 
+                      color={accent?.glow?.split('-')[1]?.replace('/20', '') || '#22d3ee'} 
+                    />
+                 )}
+              </div>
+              
+              <div className="absolute bottom-2 right-3 text-[8px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-600 pointer-events-none opacity-40">
+                 {visMode === '3d' ? 'Interactive WebGL' : 'Orbital Trace'}
+              </div>
             </div>
 
             <div className="bg-slate-50 dark:bg-slate-950/50 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-3">

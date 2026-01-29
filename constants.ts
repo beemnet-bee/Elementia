@@ -1,23 +1,24 @@
+
 import type { ElementData } from './types';
 
 export const CATEGORY_COLORS: Record<string, string> = {
-  'alkali metal': 'bg-rose-950/40 text-rose-300 border-rose-500/50',
-  'alkaline earth metal': 'bg-amber-950/40 text-amber-300 border-amber-500/50',
-  'lanthanide': 'bg-violet-950/40 text-violet-300 border-violet-500/50',
-  'actinide': 'bg-fuchsia-950/40 text-fuchsia-300 border-fuchsia-500/50',
-  'transition metal': 'bg-sky-950/40 text-sky-300 border-sky-500/50',
-  'post-transition metal': 'bg-emerald-950/40 text-emerald-300 border-emerald-500/50',
-  'metalloid': 'bg-teal-950/40 text-teal-300 border-teal-500/50',
-  'diatomic nonmetal': 'bg-lime-950/40 text-lime-300 border-lime-500/50',
-  'polyatomic nonmetal': 'bg-green-950/40 text-green-300 border-green-500/50',
-  'noble gas': 'bg-indigo-950/40 text-indigo-300 border-indigo-500/50',
-  'unknown, probably transition metal': 'bg-slate-900/40 text-slate-300 border-slate-500/50',
-  'unknown, probably post-transition metal': 'bg-slate-900/40 text-slate-300 border-slate-500/50',
-  'unknown, probably metalloid': 'bg-slate-900/40 text-slate-300 border-slate-500/50',
-  'unknown, predicted to be noble gas': 'bg-slate-900/40 text-slate-300 border-slate-500/50',
-  'unknown, but predicted to be an alkali metal': 'bg-rose-900/20 text-rose-400 border-rose-500/30',
-  'unknown, predicted to be an alkaline earth metal': 'bg-amber-900/20 text-amber-400 border-amber-500/30',
-  'unknown, predicted to be a transition metal': 'bg-sky-900/20 text-sky-400 border-sky-500/30',
+  'alkali metal': 'bg-rose-100/80 text-rose-700 border-rose-200 dark:bg-rose-950/40 dark:text-rose-300 dark:border-rose-500/50',
+  'alkaline earth metal': 'bg-amber-100/80 text-amber-700 border-amber-200 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-500/50',
+  'lanthanide': 'bg-violet-100/80 text-violet-700 border-violet-200 dark:bg-violet-950/40 dark:text-violet-300 dark:border-violet-500/50',
+  'actinide': 'bg-fuchsia-100/80 text-fuchsia-700 border-fuchsia-200 dark:bg-fuchsia-950/40 dark:text-fuchsia-300 dark:border-fuchsia-500/50',
+  'transition metal': 'bg-sky-100/80 text-sky-700 border-sky-200 dark:bg-sky-950/40 dark:text-sky-300 dark:border-sky-500/50',
+  'post-transition metal': 'bg-emerald-100/80 text-emerald-700 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-500/50',
+  'metalloid': 'bg-teal-100/80 text-teal-700 border-teal-200 dark:bg-teal-950/40 dark:text-teal-300 dark:border-teal-500/50',
+  'diatomic nonmetal': 'bg-lime-100/80 text-lime-700 border-lime-200 dark:bg-lime-950/40 dark:text-lime-300 dark:border-lime-500/50',
+  'polyatomic nonmetal': 'bg-green-100/80 text-green-700 border-green-200 dark:bg-green-950/40 dark:text-green-300 dark:border-green-500/50',
+  'noble gas': 'bg-indigo-100/80 text-indigo-700 border-indigo-200 dark:bg-indigo-950/40 dark:text-indigo-300 dark:border-indigo-500/50',
+  'unknown, probably transition metal': 'bg-slate-100/80 text-slate-700 border-slate-200 dark:bg-slate-900/40 dark:text-slate-300 dark:border-slate-500/50',
+  'unknown, probably post-transition metal': 'bg-slate-100/80 text-slate-700 border-slate-200 dark:bg-slate-900/40 dark:text-slate-300 dark:border-slate-500/50',
+  'unknown, probably metalloid': 'bg-slate-100/80 text-slate-700 border-slate-200 dark:bg-slate-900/40 dark:text-slate-300 dark:border-slate-500/50',
+  'unknown, predicted to be noble gas': 'bg-slate-100/80 text-slate-700 border-slate-200 dark:bg-slate-900/40 dark:text-slate-300 dark:border-slate-500/50',
+  'unknown, but predicted to be an alkali metal': 'bg-rose-100/40 text-rose-600 border-rose-200 dark:bg-rose-900/20 dark:text-rose-400 dark:border-rose-500/30',
+  'unknown, predicted to be an alkaline earth metal': 'bg-amber-100/40 text-amber-600 border-amber-200 dark:bg-amber-900/20 dark:text-amber-400 dark:border-amber-500/30',
+  'unknown, predicted to be a transition metal': 'bg-sky-100/40 text-sky-600 border-sky-200 dark:bg-sky-900/20 dark:text-sky-400 dark:border-sky-500/30',
 };
 
 export const CATEGORY_BORDER_COLORS: Record<string, string> = {
@@ -62,16 +63,16 @@ export const CATEGORY_ACCENT_COLORS: Record<string, { bg: string; text: string; 
 };
 
 export const CATEGORY_GLOW_COLORS: Record<string, string> = {
-    'alkali metal': 'shadow-rose-500/20',
-    'alkaline earth metal': 'shadow-amber-500/20',
-    'lanthanide': 'shadow-violet-500/20',
-    'actinide': 'shadow-fuchsia-500/20',
-    'transition metal': 'shadow-sky-500/20',
-    'post-transition metal': 'shadow-emerald-500/20',
-    'metalloid': 'shadow-teal-500/20',
-    'diatomic nonmetal': 'shadow-lime-500/20',
-    'polyatomic nonmetal': 'shadow-green-500/20',
-    'noble gas': 'shadow-indigo-500/20',
+    'alkali metal': 'shadow-rose-500/20 dark:shadow-rose-500/20',
+    'alkaline earth metal': 'shadow-amber-500/20 dark:shadow-amber-500/20',
+    'lanthanide': 'shadow-violet-500/20 dark:shadow-violet-500/20',
+    'actinide': 'shadow-fuchsia-500/20 dark:shadow-fuchsia-500/20',
+    'transition metal': 'shadow-sky-500/20 dark:shadow-sky-500/20',
+    'post-transition metal': 'shadow-emerald-500/20 dark:shadow-emerald-500/20',
+    'metalloid': 'shadow-teal-500/20 dark:shadow-teal-500/20',
+    'diatomic nonmetal': 'shadow-lime-500/20 dark:shadow-lime-500/20',
+    'polyatomic nonmetal': 'shadow-green-500/20 dark:shadow-green-500/20',
+    'noble gas': 'shadow-indigo-500/20 dark:shadow-indigo-500/20',
 };
 
 export const ELEMENTS: ElementData[] = [
@@ -93,7 +94,7 @@ export const ELEMENTS: ElementData[] = [
   {"number": 16, "symbol": "S", "name": "Sulfur", "atomic_mass": 32.06, "category": "polyatomic nonmetal", "row": 3, "col": 16, "summary": "Under normal conditions, sulfur atoms form cyclic octatomic molecules with a chemical formula S8.", "protons": 16, "neutrons": 16, "electrons": 16, "electron_configuration": "[Ne] 3s² 3p⁴", "image_url": "https://storage.googleapis.com/pai-images/4686419ca5124e4f828a2b5683457d18.jpeg", "discovered_by": "Ancient civilizations", "year_discovered": "Known since antiquity", "melting_point": 388.36, "boiling_point": 717.8, "density": 2.07, "electronegativity": 2.58, "ionization_energy": 999.6, "electron_affinity": 200},
   {"number": 17, "symbol": "Cl", "name": "Chlorine", "atomic_mass": 35.45, "category": "diatomic nonmetal", "row": 3, "col": 17, "summary": "Chlorine is the second most abundant halogen and 21st most abundant chemical element in Earth's crust.", "protons": 17, "neutrons": 18, "electrons": 17, "electron_configuration": "[Ne] 3s² 3p⁵", "discovered_by": "Carl Wilhelm Scheele", "year_discovered": 1774, "melting_point": 171.6, "boiling_point": 239.11, "density": 3.214, "electronegativity": 3.16, "ionization_energy": 1251.2, "electron_affinity": 349},
   {"number": 18, "symbol": "Ar", "name": "Argon", "atomic_mass": 39.948, "category": "noble gas", "row": 3, "col": 18, "summary": "Argon is the third-most abundant gas in the Earth's atmosphere, at 0.934%.", "protons": 18, "neutrons": 22, "electrons": 18, "electron_configuration": "[Ne] 3s² 3p⁶", "discovered_by": "Lord Rayleigh & William Ramsay", "year_discovered": 1894, "melting_point": 83.81, "boiling_point": 87.302, "density": 1.784, "electronegativity": "N/A", "ionization_energy": 1520.6, "electron_affinity": 0},
-  {"number": 19, "symbol": "K", "name": "Potassium", "atomic_mass": 39.0983, "category": "alkali metal", "row": 4, "col": 1, "summary": "Potassium is a silvery-white metal that is soft enough to be cut with a knife with little force.", "protons": 19, "neutrons": 20, "electrons": 19, "electron_configuration": "[Ar] 4s¹", "discovered_by": "Humphry Davy", "year_discovered": 1807, "melting_point": 336.7, "boiling_point": 1032, "density": 0.862, "electronegativity": 0.82, "ionization_energy": 418.8, "electron_affinity": 48.4},
+  {"number": 19, "symbol": "K", "name": "Potassium", "atomic_mass": 39.0983, "category": "alk alkali metal", "row": 4, "col": 1, "summary": "Potassium is a silvery-white metal that is soft enough to be cut with a knife with little force.", "protons": 19, "neutrons": 20, "electrons": 19, "electron_configuration": "[Ar] 4s¹", "discovered_by": "Humphry Davy", "year_discovered": 1807, "melting_point": 336.7, "boiling_point": 1032, "density": 0.862, "electronegativity": 0.82, "ionization_energy": 418.8, "electron_affinity": 48.4},
   {"number": 20, "symbol": "Ca", "name": "Calcium", "atomic_mass": 40.078, "category": "alkaline earth metal", "row": 4, "col": 2, "summary": "Calcium is the fifth most abundant element in Earth's crust and the third most abundant metal, after iron and aluminium.", "protons": 20, "neutrons": 20, "electrons": 20, "electron_configuration": "[Ar] 4s²", "discovered_by": "Humphry Davy", "year_discovered": 1808, "melting_point": 1115, "boiling_point": 1757, "density": 1.55, "electronegativity": 1.0, "ionization_energy": 589.8, "electron_affinity": 2.4},
   {"number": 21, "symbol": "Sc", "name": "Scandium", "atomic_mass": 44.955908, "category": "transition metal", "row": 4, "col": 3, "summary": "Scandium is a silvery-white metallic d-block element, it has historically been sometimes classified as a rare-earth element, together with yttrium and the lanthanides.", "protons": 21, "neutrons": 24, "electrons": 21, "electron_configuration": "[Ar] 3d¹ 4s²", "discovered_by": "Lars Fredrik Nilson", "year_discovered": 1879, "melting_point": 1814, "boiling_point": 3109, "density": 2.985, "electronegativity": 1.36, "ionization_energy": 633.1},
   {"number": 22, "symbol": "Ti", "name": "Titanium", "atomic_mass": 47.867, "category": "transition metal", "row": 4, "col": 4, "summary": "Titanium is a lustrous transition metal with a silver color, low density, and high strength.", "protons": 22, "neutrons": 26, "electrons": 22, "electron_configuration": "[Ar] 3d² 4s²", "discovered_by": "William Gregor", "year_discovered": 1791, "melting_point": 1941, "boiling_point": 3560, "density": 4.506, "electronegativity": 1.54, "ionization_energy": 658.8},

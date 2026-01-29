@@ -1,5 +1,5 @@
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { ELEMENTS, CATEGORY_ACCENT_COLORS } from '../constants';
 import { ElementData, QuizType } from '../types';
 import { useMastery } from '../contexts/MasteryContext';
@@ -91,13 +91,38 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onBack }) => {
       const entry = progress.activityHistory.find(h => h.date === dateStr);
       result.push({
         label: d.toLocaleDateString(undefined, { weekday: 'short' }),
+        count: entry ? entry.count : 0,
+        date: dateStr
+      });
+    }
+    return result;
+  }, [progress.activityHistory]);
+
+  const heatmapData = useMemo(() => {
+    const result = [];
+    const today = new Date();
+    for (let i = 27; i >= 0; i--) {
+      const d = new Date(today);
+      d.setDate(today.getDate() - i);
+      const dateStr = d.toISOString().split('T')[0];
+      const entry = progress.activityHistory.find(h => h.date === dateStr);
+      result.push({
+        date: d,
         count: entry ? entry.count : 0
       });
     }
     return result;
   }, [progress.activityHistory]);
 
+  const affinityData = useMemo(() => {
+    return ELEMENTS
+      .filter(e => typeof e.electron_affinity === 'number' && e.electron_affinity > 0)
+      .sort((a, b) => (b.electron_affinity as number) - (a.electron_affinity as number))
+      .slice(0, 15);
+  }, []);
+
   const maxActivity = Math.max(...chartData.map(d => d.count), 5);
+  const maxAffinity = Math.max(...affinityData.map(d => d.electron_affinity as number), 1);
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-6 space-y-8 animate-reveal relative z-10 pb-40">
@@ -223,6 +248,63 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onBack }) => {
                         <div key={i} className="flex flex-col items-center"><span className="text-[9px] font-black text-slate-400">{d.label}</span></div>
                      ))}
                   </div>
+               </div>
+
+               {/* Historical Streak Heatmap */}
+               <div className="pt-6 border-t border-slate-100 dark:border-slate-800 space-y-4">
+                  <div className="flex justify-between items-center">
+                     <h4 className="text-[9px] font-black uppercase tracking-[0.4em] text-slate-400">Historical Temporal Map</h4>
+                     <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">28-Day Log</span>
+                  </div>
+                  <div className="grid grid-cols-7 gap-2">
+                     {heatmapData.map((day, i) => {
+                        const intensity = day.count === 0 ? 0 : day.count < 5 ? 1 : day.count < 15 ? 2 : 3;
+                        const colors = [
+                           'bg-slate-100 dark:bg-slate-800/40',
+                           'bg-cyan-500/20',
+                           'bg-cyan-500/50',
+                           'bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.4)]'
+                        ];
+                        return (
+                           <div 
+                              key={i} 
+                              className={`aspect-square rounded-md ${colors[intensity]} transition-all hover:scale-110 cursor-help relative group/tip`}
+                              title={`${day.date.toDateString()}: ${day.count} probes`}
+                           >
+                              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-slate-900 text-[8px] text-white rounded opacity-0 group-hover/tip:opacity-100 pointer-events-none whitespace-nowrap z-20">
+                                 {day.count} Probes • {day.date.toLocaleDateString(undefined, {month:'short', day:'numeric'})}
+                              </div>
+                           </div>
+                        );
+                     })}
+                  </div>
+               </div>
+            </div>
+
+            {/* Electron Affinity Bar Chart */}
+            <div className="bg-white dark:bg-slate-900/40 p-8 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-xl space-y-8 overflow-hidden">
+               <div className="flex justify-between items-center">
+                  <h3 className="text-[9px] font-black uppercase tracking-[0.4em] text-slate-400">Electron Affinity Spectrum</h3>
+                  <div className="flex items-center space-x-2">
+                     <span className="w-1 h-1 rounded-full bg-indigo-500"></span>
+                     <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Top 15 Valence States</span>
+                  </div>
+               </div>
+               <div className="space-y-3">
+                  {affinityData.map((el, i) => (
+                     <div key={el.number} className="flex items-center space-x-4 group">
+                        <div className="w-8 text-[9px] font-black text-slate-400 dark:text-slate-600 group-hover:text-indigo-500 transition-colors">{el.symbol}</div>
+                        <div className="flex-grow h-3 bg-slate-50 dark:bg-slate-800/40 rounded-full overflow-hidden relative">
+                           <div 
+                              className="h-full bg-gradient-to-r from-indigo-500 to-cyan-500 rounded-full transition-all duration-1000 ease-out flex items-center justify-end px-2"
+                              style={{ width: `${((el.electron_affinity as number) / maxAffinity) * 100}%`, transitionDelay: `${i * 50}ms` }}
+                           >
+                              <span className="text-[7px] font-black text-white opacity-0 group-hover:opacity-100 transition-opacity">{el.electron_affinity} kJ/mol</span>
+                           </div>
+                        </div>
+                        <div className="w-12 text-right text-[9px] font-mono text-slate-500">{el.electron_affinity}</div>
+                     </div>
+                  ))}
                </div>
             </div>
 
