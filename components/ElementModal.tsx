@@ -135,6 +135,10 @@ export const ElementModal: React.FC<ElementModalProps> = ({ element, onClose, an
                       electrons={element.electrons} 
                       config={element.electron_configuration} 
                       color={themeColor}
+                      meltingPoint={element.melting_point}
+                      boilingPoint={element.boiling_point}
+                      density={element.density}
+                      electronegativity={element.electronegativity}
                     />
                  )}
               </div>
