@@ -176,7 +176,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onBack }) => {
                        <defs>
                           <linearGradient id="masteryGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                              <stop offset="0%" stopColor="#06b6d4" />
-                             <stop offset="100%" stopColor="#6366f1" />
+                             <stop offset="100%" stopColor="#0ea5e9" />
                           </linearGradient>
                        </defs>
                     </svg>
@@ -286,17 +286,17 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onBack }) => {
                <div className="flex justify-between items-center">
                   <h3 className="text-[9px] font-black uppercase tracking-[0.4em] text-slate-400">Electron Affinity Spectrum</h3>
                   <div className="flex items-center space-x-2">
-                     <span className="w-1 h-1 rounded-full bg-indigo-500"></span>
+                     <span className="w-1 h-1 rounded-full bg-cyan-600 dark:bg-cyan-400"></span>
                      <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Top 15 Valence States</span>
                   </div>
                </div>
                <div className="space-y-3">
                   {affinityData.map((el, i) => (
                      <div key={el.number} className="flex items-center space-x-4 group">
-                        <div className="w-8 text-[9px] font-black text-slate-400 dark:text-slate-600 group-hover:text-indigo-500 transition-colors">{el.symbol}</div>
+                        <div className="w-8 text-[9px] font-black text-slate-400 dark:text-slate-600 group-hover:text-cyan-500 transition-colors">{el.symbol}</div>
                         <div className="flex-grow h-3 bg-slate-50 dark:bg-slate-800/40 rounded-full overflow-hidden relative">
                            <div 
-                              className="h-full bg-gradient-to-r from-indigo-500 to-cyan-500 rounded-full transition-all duration-1000 ease-out flex items-center justify-end px-2"
+                              className="h-full bg-gradient-to-r from-cyan-600 to-sky-400 rounded-full transition-all duration-1000 ease-out flex items-center justify-end px-2"
                               style={{ width: `${((el.electron_affinity as number) / maxAffinity) * 100}%`, transitionDelay: `${i * 50}ms` }}
                            >
                               <span className="text-[7px] font-black text-white opacity-0 group-hover:opacity-100 transition-opacity">{el.electron_affinity} kJ/mol</span>
@@ -321,7 +321,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onBack }) => {
                   title="Atomic Map" 
                   desc="Neural recall drills." 
                   icon="El" 
-                  color="indigo"
+                  color="sky"
                   onClick={() => startMode('symbol_to_name')}
                />
                <FeatureCard 
@@ -345,7 +345,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onBack }) => {
           <div className="lg:col-span-4 space-y-6">
              <div className="bg-white dark:bg-slate-900/60 p-6 rounded-[1.5rem] border border-slate-200 dark:border-slate-800 shadow-lg relative overflow-hidden">
                 <h3 className="text-[9px] font-black uppercase tracking-[0.4em] text-slate-400 mb-6 flex items-center">
-                   <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mr-2"></span>
+                   <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 mr-2"></span>
                    Knowledge Density
                 </h3>
                 <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
@@ -367,12 +367,12 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onBack }) => {
                 </div>
              </div>
              
-             <div className="bg-gradient-to-br from-indigo-500/5 to-cyan-500/5 p-8 rounded-[1.5rem] border border-cyan-500/10 shadow-xl space-y-6">
+             <div className="bg-gradient-to-br from-cyan-500/5 to-sky-500/5 p-8 rounded-[1.5rem] border border-cyan-500/10 shadow-xl space-y-6">
                  <h3 className="text-[9px] font-black uppercase tracking-[0.4em] text-cyan-600 dark:text-cyan-400 mb-2">Efficiency Matrix</h3>
                  <div className="space-y-4">
                     <div className="flex items-center justify-between">
                        <span className="text-[10px] font-bold text-slate-500">Global Accuracy</span>
-                       <span className="text-xl font-black text-indigo-500">{accuracy}%</span>
+                       <span className="text-xl font-black text-cyan-600 dark:text-cyan-400">{accuracy}%</span>
                     </div>
                     <div className="flex items-center justify-between">
                        <span className="text-[10px] font-bold text-slate-500">Total Probes</span>
@@ -419,7 +419,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onBack }) => {
                  <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Progress</span>
                  <div className="flex space-x-1">
                     {deck.map((_, i) => (
-                       <div key={i} className={`w-1 h-5 rounded-full transition-all ${i === deckIndex ? 'bg-cyan-500 scale-y-110' : i < deckIndex ? 'bg-indigo-500/40' : 'bg-slate-200 dark:bg-slate-800'}`}></div>
+                       <div key={i} className={`w-1 h-5 rounded-full transition-all ${i === deckIndex ? 'bg-cyan-500 scale-y-110' : i < deckIndex ? 'bg-cyan-500/40' : 'bg-slate-200 dark:bg-slate-800'}`}></div>
                     ))}
                  </div>
               </div>
@@ -487,7 +487,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onBack }) => {
 const FeatureCard = ({ title, desc, icon, color, onClick }: any) => {
   const colorClasses: any = {
     cyan: 'bg-cyan-500 text-white shadow-cyan-500/20 ring-cyan-500/10',
-    indigo: 'bg-indigo-500 text-white shadow-indigo-500/20 ring-indigo-500/10',
+    sky: 'bg-sky-500 text-white shadow-sky-500/20 ring-sky-500/10',
     rose: 'bg-rose-500 text-white shadow-rose-500/20 ring-rose-500/10',
     amber: 'bg-amber-500 text-white shadow-amber-500/20 ring-amber-500/10'
   };

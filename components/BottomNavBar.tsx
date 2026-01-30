@@ -51,7 +51,7 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({
         <div className="flex items-center space-x-2 sm:space-x-4 pr-6 border-r border-slate-200 dark:border-slate-800/50">
           <button 
             onClick={() => onViewChange(view === 'registry' ? 'dashboard' : 'registry')}
-            className={`flex items-center space-x-3 px-6 py-3 rounded-2xl transition-all active:scale-95 ${view === 'dashboard' ? 'bg-indigo-500 text-white shadow-lg' : 'bg-slate-50 dark:bg-slate-800/40 text-slate-500 dark:text-slate-400 hover:text-cyan-500 hover:bg-white dark:hover:bg-slate-800'}`}
+            className={`flex items-center space-x-3 px-6 py-3 rounded-2xl transition-all active:scale-95 ${view === 'dashboard' ? 'bg-cyan-600 dark:bg-cyan-500 text-white shadow-[0_10px_30px_rgba(6,182,212,0.3)]' : 'bg-slate-50 dark:bg-slate-800/40 text-slate-500 dark:text-slate-400 hover:text-cyan-500 hover:bg-white dark:hover:bg-slate-800'}`}
           >
              {view === 'registry' ? (
                 <>
