@@ -1,8 +1,11 @@
+
 import { GoogleGenAI } from "@google/genai";
 
-export const getElementFact = async (elementName: string): Promise<string> => {
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+export const getElementFact = async (elementName: string, retries = 2): Promise<string> => {
   try {
-    // Initialize inside the function to ensure the API key is current and avoids module-level load errors
+    // Initialize inside the function to ensure the API key is current
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     
     const response = await ai.models.generateContent({
@@ -15,8 +18,15 @@ export const getElementFact = async (elementName: string): Promise<string> => {
     });
 
     return response.text?.trim() || `The atomic resonance of ${elementName} reveals unique properties in high-energy physics contexts.`;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Gemini API Error:", error);
+    
+    // Retry logic for transient 500 errors
+    if (retries > 0 && (error.status === 500 || error.message?.includes('500'))) {
+      await delay(1000);
+      return getElementFact(elementName, retries - 1);
+    }
+    
     return `The electronic structure of ${elementName} plays a critical role in standard model chemical bonding.`;
   }
 };

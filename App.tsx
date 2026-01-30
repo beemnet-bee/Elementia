@@ -218,16 +218,18 @@ const AppContent: React.FC = () => {
         <SolubilityModal onClose={() => setIsSolubilityOpen(false)} />
       )}
 
-      <BottomNavBar 
-        searchQuery={searchQuery}
-        onSearchChange={handleSearchChange}
-        hoveredElement={hoveredElement}
-        onRandomClick={triggerRandomElement}
-        onCompareClick={() => startComparison()}
-        matchingCount={matchingCount}
-        view={view}
-        onViewChange={setView}
-      />
+      {!selectedElement && !comparisonPair && !isAIResearcherOpen && !isSolubilityOpen && (
+        <BottomNavBar 
+          searchQuery={searchQuery}
+          onSearchChange={handleSearchChange}
+          hoveredElement={hoveredElement}
+          onRandomClick={triggerRandomElement}
+          onCompareClick={() => startComparison()}
+          matchingCount={matchingCount}
+          view={view}
+          onViewChange={setView}
+        />
+      )}
       
        <style>{`
         @keyframes reveal {
